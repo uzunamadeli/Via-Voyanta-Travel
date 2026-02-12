@@ -1,10 +1,16 @@
 import { GoogleGenAI } from "@google/genai";
 import { Language } from '../types';
 
-const apiKey = process.env.API_KEY || '';
+const apiKey = process.env.API_KEY || process.env.GEMINI_API_KEY || '';
 
-// Initialize client
-const ai = new GoogleGenAI({ apiKey });
+// Initialize client lazily to prevent crash when no API key
+let ai: GoogleGenAI | null = null;
+const getAI = () => {
+  if (!ai && apiKey) {
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 export const generateViaResponse = async (
   userMessage: string, 
@@ -34,7 +40,11 @@ export const generateViaResponse = async (
   `;
 
   try {
-    const chat = ai.chats.create({
+    const client = getAI();
+    if (!client) {
+      return language === 'tr' ? "API anahtarı yapılandırılmamış. Lütfen daha sonra tekrar deneyin." : "API key not configured. Please try again later.";
+    }
+    const chat = client.chats.create({
       model: 'gemini-3-pro-preview', 
       config: {
         systemInstruction: systemInstruction,
