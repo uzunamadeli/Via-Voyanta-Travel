@@ -128,7 +128,7 @@ function App() {
                  <div className="relative group">
                     <div className="absolute -inset-1 bg-gradient-to-r from-sky-600 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
                     <img
-                        src="https://images.unsplash.com/photo-1641128324972-af3212f0f6bd?w=600&h=800&fit=crop"
+                        src="https://images.unsplash.com/photo-1673005540028-e40e83ee8b3e?w=600&h=800&fit=crop&q=80"
                         alt="Cappadocia"
                         className="relative rounded-2xl shadow-2xl border border-blue-900 dark:border-slate-800 w-full"
                     />
